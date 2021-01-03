@@ -1,0 +1,83 @@
+<div class="page page-start">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1>{{ myTask.title.rendered }} </h1>
+            <div *ngIf="taskStatus" class="alert" [ngClass]="{
+                'alert-danger': taskStatus.id === 2,
+                'alert-warning': taskStatus.id === 3,
+                'alert-success': taskStatus.id === 4
+                }" style="display: table; margin: 0 auto;">
+                <h3>Task Status: {{ taskStatus.name }} </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <div class="page-content-inner">
+        <div class="container">
+            <div class="row" *ngIf="!isEditing">
+                <div class="col-xs-12">
+                    <h3>Task Details</h3>
+                    <h4>{{ myTask.title.rendered }} </h4>
+                    <div [innerHTML]="myTask.content.rendered"></div>
+                </div>
+            </div>
+            <div class="row" *ngIf="isEditing">
+                <div class="col-xs-12">
+                    <form (ngSubmit)="onEditTaskForm()" #taskEditForm="ngForm">
+                        <div class="y-margin">
+                            <div class="form-group">
+                                <label for="inputtaskTitle" class="col-sm-2 control-label">Task Title:</label>
+                                <div class="col-sm-10">
+                                    <input 
+                                    type="text" 
+                                    name="taskTitle" 
+                                    id="inputtaskTitle" 
+                                    class="form-control"
+                                    [ngModel]="myTask.title.rendered" 
+                                    required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="y-margin">
+                            <div class="form-group">
+                                <label for="inputtaskTitle" class="col-sm-2 control-label">Task:</label>
+                                <div class="col-sm-10">
+                                    <angular-editor name="taskContent" [(ngModel)]="myTask.content.rendered"></angular-editor>
+                                    <!-- <textarea name="taskContent" id="taskContent" class="form-control" rows="10" [ngModel]="myTask.content.rendered" 
+                                    required></textarea> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="y-margin">
+                            <div class="form-group">
+                                 <div class="col-sm-12">
+                                     <button class="btn btn-primary pull-right" type="submit" [disabled]="!taskEditForm.form.valid" *ngIf="isEditing">Save Task</button>
+                                     <button class="btn btn-primary pull-right" type="submit" *ngIf="isEditing" (click)="onCloseEditForm()">Cancel Editing</button>
+                                 </div>
+                             </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Task Actions</h3>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" *ngIf="!isEditing"><button type="button" class="btn btn-info" (click)="onOpenEditForm()">Edit Task</button></li>
+                        <li class="list-group-item" *ngIf="(myTask.categories[0] !== 2) ? true : false"><button type="button" class="btn btn-danger" (click)="onUpdateTaskStatus(2)">Make Open</button></li>
+                        <li class="list-group-item"  *ngIf="(myTask.categories[0] !== 3) ? true : false"><button type="button" class="btn btn-warning" (click)="onUpdateTaskStatus(3)">Make On Progress</button></li>
+                        <li class="list-group-item" *ngIf="(myTask.categories[0] !== 4) ? true : false"><button type="button" class="btn btn-success" (click)="onUpdateTaskStatus(4)">Make Done</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><a class="btn btn-primary" [routerLink]="['/my-tasks']">Back To Tasks</a></li>
+                    </ul>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

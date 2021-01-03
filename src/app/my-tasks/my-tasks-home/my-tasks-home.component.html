@@ -1,0 +1,59 @@
+<div class="page page-dashboard">
+    <div class="page-nav">
+      <div class="page-nav-inner">
+        <div class="header-logged"><a href="invitation.html">Invite</a><a href="members.html">10 Members</a><!-- <a href="dashboard-forme.html">Jack M.<span class="avatar"><img src="images/image.png" alt=""></span></a> --></div>
+        <ul class="page-nav__list">
+          <li><a (click)="onSelectCategory(0, 'All')">All</a></li>
+          <li *ngFor="let item of taskStatuses">
+            <a (click)="onSelectCategory(item.id, item.name)">
+                {{ item.name }}
+            </a>
+          </li>
+          <!-- <li><a (click)="onSelectCategory(2, 'Open')">Open</a></li>
+          <li><a (click)="onSelectCategory(3, 'In Progress')">In Progress</a></li>
+          <li><a (click)="onSelectCategory(4, 'Done')">Done</a></li> -->
+        </ul>
+        <a href="task-create.html" class="btn btn-accent hidden-xs" style="margin-left:15px;">add task</a>
+        <div class="page-nav-footer"><a href="contact.html">Contact</a><a href="help.html">Help</a></div>
+      </div>
+    </div>
+    <div class="page-header">
+      <div class="container-fluid">
+        <h1>{{ tasksTitle }} Tasks</h1>
+        <p *ngIf="selectedCat">{{ tasksTitle }} status tasks are listing.</p>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="dashboard-table">
+        <div class="dashboard-row" *ngFor="let task of tasks"
+          [ngClass]="{
+          'alert-danger': task.categories[0] === 2,
+          'alert-warning': task.categories[0] === 3,
+          'alert-success': task.categories[0] === 4
+          }">
+          <div class="dashboard-sub-row">
+            <div class="dashboard-col dc-text"><b>{{ task.title.rendered }}</b>  Task ID: {{ task.taskID }}</div>
+            <!--<div class="dashboard-col dc-category"><a href="#">Life</a></div>-->
+            <!--<div class="dashboard-col dc-date">September 5</div>-->
+            <!-- <div class="dashboard-col dc-member">
+              <div title="done task" class="dashboard-check"></div>
+            </div> -->
+          </div>
+          <div class="dashboard-sub-row">
+            <div class="details">
+              <div class="lead" [innerHTML]="task.content.rendered"></div>
+              <a [routerLink]="[task.taskID]" class="btn btn-accent">view task</a>
+              <a [routerLink]="[task.taskID]" [queryParams]="{edit: 'true'}" >edit task</a>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="no-found-tasks" *ngIf="tasks.length < 1"><h1>No tasks found!</h1></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

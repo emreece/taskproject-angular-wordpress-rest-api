@@ -1,0 +1,17 @@
+<!-- header-->
+<div class="header">
+    <div class="header-inner">
+        <div class="header-logo"><a [routerLink]="[homeUrl]">myTasks</a></div>
+        <div class="header-icons">
+        <div class="burger hidden-lg hidden-md"><a href="#"><span></span><span></span><span></span></a></div>
+        </div>
+        <div class="header-login">
+            <span *ngIf="isLogin" style="margin-right:30px;">Welcome {{ userName }}</span>
+            <a *ngIf="!isLogin" [routerLink]="['/register']">Register</a>
+            <a *ngIf="!isLogin" [routerLink]="['/login']">Login</a>
+            <a *ngIf="isLogin" [routerLink]="['/my-tasks']">My Tasks</a>
+            <a *ngIf="isLogin" (click)="onLogout()">Logout</a>
+        </div>
+    </div>
+</div>
+<!-- ./ header-->

@@ -31,8 +31,6 @@ export class AppComponent implements OnInit{
         
         this.userChanged = this.loService.userDataChanged.subscribe(
           (username:string) => { 
-              console.log("username");
-              console.log(username);
               this.userData.username = username;
           }
         );

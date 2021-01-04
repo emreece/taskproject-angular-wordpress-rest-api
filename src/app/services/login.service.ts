@@ -6,9 +6,9 @@ import { retry, catchError, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    loginUrl: string = "http://localhost/wpjwt/wp-json/jwt-auth/v1/token";
-    checkTokenUrl: string = "http://localhost/wpjwt/wp-json/jwt-auth/v1/token/validate/";
-    getMyInformationUrl: string = "http://localhost/wpjwt/wp-json/wp/v2/users/me";
+    loginUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/jwt-auth/v1/token";
+    checkTokenUrl: string = "https://www.esanlamlisinedir.com//wpjwt/wp-json/jwt-auth/v1/token/validate/";
+    getMyInformationUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/users/me";
     loginStatusChanged = new Subject<boolean>();
     userDataChanged = new Subject<string>(); 
     constructor(private httpClient: HttpClient) { }

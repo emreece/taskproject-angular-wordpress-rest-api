@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
-import { userTasksService } from 'src/app/services/userTasks.service';
 
 @Component({
   selector: 'app-header',
@@ -16,12 +15,11 @@ export class HeaderComponent implements OnInit {
   taskStatuses: Array<any> = [];
   homeUrl: string = '';
   constructor(
+    private route: ActivatedRoute,
     private router: Router, 
     private loService: LoginService) { }
 
   ngOnInit(): void {
-    console.log("this.userName");
-    console.log(this.userName);
     this.loginStatusChanged = this.loService.loginStatusChanged.subscribe(
       (isLoggedIn:boolean) => { 
           this.isLogin = isLoggedIn;
@@ -31,7 +29,20 @@ export class HeaderComponent implements OnInit {
             this.homeUrl = '/'
           }
       }
+    ); 
+   
+    /* this.route.url.subscribe(url => {
+    console.log(url);
+    this.loginStatusChanged = this.loService.checkToken().subscribe(
+      (isLoggedInData:any) => { 
+          if(isLoggedInData.data.status == '200') {
+            this.homeUrl = 'my-tasks'
+          } else{
+            this.homeUrl = '/'
+          }
+      }
     );
+    }) */
   }
   
   onLogout(): void {

@@ -8,8 +8,8 @@ import { newTaskData, taskData } from '../models/task.model';
 
 @Injectable({ providedIn: 'root' })
 export class userTasksService {
-    myTasksUrl: string = 'http://localhost/wpjwt/wp-json/wp/v2/task/';
-    taskCategoriesUrl: string = 'http://localhost/wpjwt/wp-json/wp/v2/categories/'
+    myTasksUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/task/';
+    taskCategoriesUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/categories/'
     tasks : Array<taskData> = [];
     constructor(private httpClient: HttpClient, private loService: LoginService) { }
 
@@ -61,7 +61,6 @@ export class userTasksService {
             )
     }
     public getCategory(catID:number): Observable<any> {
-        console.log('getCategory');
         let httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -72,7 +71,6 @@ export class userTasksService {
         return this.httpClient.get<any>(this.taskCategoriesUrl+catID, httpOptions)
             .pipe(
                 map(response => {
-                    console.log("categoryData", response.body);
                     return response.body
                 }),
                 retry(1),

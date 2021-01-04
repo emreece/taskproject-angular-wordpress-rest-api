@@ -1,7 +1,8 @@
 <div class="page page-dashboard">
     <div class="page-nav">
       <div class="page-nav-inner">
-        <div class="header-logged"><a href="invitation.html">Invite</a><a href="members.html">10 Members</a><!-- <a href="dashboard-forme.html">Jack M.<span class="avatar"><img src="images/image.png" alt=""></span></a> --></div>
+        <!-- <div class="header-logged"><a href="invitation.html">Invite</a><a href="members.html">10 Members</a>
+          <a href="dashboard-forme.html">Jack M.<span class="avatar"><img src="images/image.png" alt=""></span></a></div> -->
         <ul class="page-nav__list">
           <li><a (click)="onSelectCategory(0, 'All')">All</a></li>
           <li *ngFor="let item of taskStatuses">
@@ -13,8 +14,8 @@
           <li><a (click)="onSelectCategory(3, 'In Progress')">In Progress</a></li>
           <li><a (click)="onSelectCategory(4, 'Done')">Done</a></li> -->
         </ul>
-        <a href="task-create.html" class="btn btn-accent hidden-xs" style="margin-left:15px;">add task</a>
-        <div class="page-nav-footer"><a href="contact.html">Contact</a><a href="help.html">Help</a></div>
+        <a [routerLink]="['/my-tasks/create']" class="btn btn-accent hidden-xs" style="margin-left:15px;">add task</a>
+     <!--    <div class="page-nav-footer"><a href="contact.html">Contact</a><a href="help.html">Help</a></div> -->
       </div>
     </div>
     <div class="page-header">

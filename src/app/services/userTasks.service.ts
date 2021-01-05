@@ -153,6 +153,25 @@ export class userTasksService {
             )
     }
 
+    public canViewTask(taskID) {
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.loService.GetToken(),
+            })
+        }
+        const promise = new Promise(
+            (resolve,reject) => {
+            resolve(this.httpClient.get<object>(this.myTasksUrl + taskID, httpOptions)
+            .pipe(
+                retry(1),
+                catchError(this.handleAuthError)
+            ))
+            }
+        )
+        return promise;
+    }
+
     errorHandel(error) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {

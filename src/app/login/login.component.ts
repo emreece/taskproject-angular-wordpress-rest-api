@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       this.loService.loginStatusChanged.next(true);
       console.log("onLoginSubmit");
       console.log(data);
-      this.loService.userDataChanged.next(data.user_display_name);
+      this.loService.userDataChanged.next(data);
       window.localStorage.setItem("token", data.token);
       window.localStorage.setItem("refreshToken", data.token);
       window.localStorage.setItem("createdDate", new Date().toString());

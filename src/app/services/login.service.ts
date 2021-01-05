@@ -10,7 +10,7 @@ export class LoginService {
     checkTokenUrl: string = "https://www.esanlamlisinedir.com//wpjwt/wp-json/jwt-auth/v1/token/validate/";
     getMyInformationUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/users/me";
     loginStatusChanged = new Subject<boolean>();
-    userDataChanged = new Subject<string>(); 
+    userDataChanged = new Subject(); 
     constructor(private httpClient: HttpClient) { }
 
     GetToken(): string | boolean {

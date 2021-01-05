@@ -53,7 +53,7 @@ export class userTasksService {
         return this.httpClient.get<any>(this.myTasksUrl + id.toString(), httpOptions)
             .pipe(
                 map(response => {
-                    console.log("getPost",response.body);
+                   /*  console.log("getPost",response.body); */
                     return response.body;
                 }),
                 retry(1),

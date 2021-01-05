@@ -52,7 +52,7 @@ export class MyTaskDetailComponent implements OnInit {
     })
   }
   onEditTaskForm() {
-    console.log(this.taskEditForm.value);
+   /*  console.log(this.taskEditForm.value); */
     const newTaskData : taskData = 
     {
       title:this.taskEditForm.value.taskTitle,
@@ -61,8 +61,8 @@ export class MyTaskDetailComponent implements OnInit {
     };
     this.uTasksService.updateTask(newTaskData).subscribe(
       res => {
-        console.log('res');
-        console.log(res);
+  /*       console.log('res');
+        console.log(res); */
         this.dialog.open(updatedTaskDialog, {
           data: {
             dialogMessage: "Your task is updated!"

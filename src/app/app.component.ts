@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   isLoggedIn = false;
   loginStatusChanged: Subscription;
    // userData: string = '';
-  userData = new userData();
+  userData; //new userData();
   
   userChanged: Subscription;
 /*   @Output() onLogin: EventEmitter<any> = new EventEmitter<any>(); */
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
     
   }
   ngOnInit():void {
-        
+        this.userData = [];
         this.loginStatusChanged = this.loService.loginStatusChanged.subscribe(
           (isLoggedIn:boolean) => { 
               this.isLoggedIn = isLoggedIn
@@ -30,8 +30,8 @@ export class AppComponent implements OnInit{
         );
         
         this.userChanged = this.loService.userDataChanged.subscribe(
-          (username:string) => { 
-              this.userData.username = username;
+          (userData) => { 
+              this.userData = userData;
           }
         );
 
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit{
                  /* this.personModel.name = res.name;
                  this.personModel.image = res.avatar_urls[96] */
                  this.userData.username = res.name;
-                 this.loService.userDataChanged.next(res.name);
+                 this.loService.userDataChanged.next(res);
                 },
                 error => {
                     console.log("error", error);

@@ -6,6 +6,6 @@ export class userData {
     constructor() { 
         this.username = '';
         this.userID = 0;
-        this.roles = ['taskuser']; // Default
+        this.roles = ['subscriber']; // Default
     }
 }

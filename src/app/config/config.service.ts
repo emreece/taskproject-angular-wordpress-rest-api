@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler) {
       const token = localStorage.getItem("token");
       let newRequest: HttpRequest<any>;
-      if (request.url != "https://www.esanlamlisinedir.com/wpjwt/wp-json/jwt-auth/v1/token") {
+      if (request.url != environment.tokenEndpoint) {
           newRequest = request.clone({
               headers: request.headers.set("Authorization", `Bearer ${token}`)
           });

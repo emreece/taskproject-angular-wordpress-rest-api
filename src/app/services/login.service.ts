@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 // import { Person } from 'src/Model/person';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    loginUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/jwt-auth/v1/token";
-    checkTokenUrl: string = "https://www.esanlamlisinedir.com//wpjwt/wp-json/jwt-auth/v1/token/validate/";
-    getMyInformationUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/users/me";
+    loginUrl: string = environment.tokenEndpoint;
+    checkTokenUrl: string = environment.checkTokenUrl;
+    getMyInformationUrl: string = environment.getMyInformationUrl;
     loginStatusChanged = new Subject<boolean>();
     userDataChanged = new Subject(); 
     constructor(private httpClient: HttpClient) { }
@@ -22,7 +23,6 @@ export class LoginService {
     }
 
     public checkTokenTime() {
-       //  debugger;
         if (window.localStorage.getItem("createdDate") != null) {
             var createdDate = new Date(window.localStorage.getItem("createdDate")),
             now = new Date(),

@@ -4,11 +4,12 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';
 import { LoginService } from './login.service';
 import { newTaskData, taskData } from '../models/task.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class userTasksService {
-    myTasksUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/task/';
-    taskCategoriesUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/categories/'
+    myTasksUrl: string = environment.myTasksUrl;
+    taskCategoriesUrl: string = environment.taskCategoriesUrl;
     tasks : Array<taskData> = [];
     constructor(private httpClient: HttpClient, private loService: LoginService) { }
 

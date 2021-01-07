@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskDetailGuard implements CanActivate {
-  getMyInformationUrl: string = "https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/users/me";
-  myTasksUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/task/';
+  getMyInformationUrl: string = environment.getMyInformationUrl;
+  myTasksUrl: string = environment.myTasksUrl;
   constructor(
     private httpClient: HttpClient,
     private router: Router) {}
@@ -82,7 +83,7 @@ export class TaskDetailGuard implements CanActivate {
    }
    handleError(err) {
         if(err.status !== 200) {
-            console.log('err!!!')
+            console.log(err)
             // return throwError(err.status);
             return;
         }

@@ -1,27 +1,68 @@
 # Taskproject
-w5D2@r2s6fwdEMq)scFliT9w
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
+This project is making a task management. Backend is using Wordpress Rest API
 
-## Development server
+## Requirements
+- Wordpress Installation and Actived Wordpress API. It is active at default Wordpress installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- JWT Authentication for WP-API plugin and custom post type registration.
 
-## Code scaffolding
+- Register task post type to your Wordpress. You can add these codes to your active theme's functions.php file.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+        function cptui_register_my_cpts_task() {
 
-## Build
+        /**
+        * Post Type: Tasks.
+        */
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+        $labels = [
+            "name" => __( "Tasks", "taskproject" ),
+            "singular_name" => __( "Task", "taskproject" ),
+        ];
 
-## Running unit tests
+        $args = [
+            "label" => __( "Tasks", "taskproject" ),
+            "labels" => $labels,
+            "description" => "",
+            "public" => true,
+            "publicly_queryable" => true,
+            "show_ui" => true,
+            "show_in_rest" => true,
+            "rest_base" => "",
+            "rest_controller_class" => "WP_REST_Posts_Controller",
+            "has_archive" => false,
+            "show_in_menu" => true,
+            "show_in_nav_menus" => true,
+            "delete_with_user" => false,
+            "exclude_from_search" => false,
+            "capability_type" => "post",
+            "map_meta_cap" => true,
+            "hierarchical" => false,
+            "rewrite" => [ "slug" => "task", "with_front" => true ],
+            "query_var" => true,
+            "supports" => [ "title", "editor", "thumbnail", "excerpt", "custom-fields", "author" ],
+            "taxonomies" => [ "category" ],
+        ];
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+        register_post_type( "task", $args );
+        }
+        add_action( 'init', 'cptui_register_my_cpts_task' );
 
-## Running end-to-end tests
+## Installation
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- Install modules with "npm install"
+- Set your api settings with enviroment file. You need to set just apiUrl parameter.
+- You can prevent to read other's tasks with below code. You shoud add these codes to your active theme's functions.php.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+        function posts_for_current_author($query) {
+            global $pagenow;
+        
+            /* if( 'edit.php' != $pagenow || !$query->is_admin )
+                return $query; */
+        
+            if( !current_user_can( 'edit_others_posts' ) ) {
+                global $user_ID;
+                $query->set('author', $user_ID );
+            }
+            return $query;
+        }
+        add_filter('pre_get_posts', 'posts_for_current_author');

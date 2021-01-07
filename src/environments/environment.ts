@@ -2,8 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+let apiUrl :string = 'https://esanlamlisinedir.com/wpjwt/wp-json/';
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: apiUrl,
+  tokenEndpoint: apiUrl + "jwt-auth/v1/token",
+  checkTokenUrl: apiUrl + "jwt-auth/v1/token/validate",
+  getMyInformationUrl: apiUrl +'wp/v2/users/me',
+  myTasksUrl: apiUrl + "wp/v2/task/",
+  taskCategoriesUrl: apiUrl + "wp/v2/categories/"
 };
 
 /*

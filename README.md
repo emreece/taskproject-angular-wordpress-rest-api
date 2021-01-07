@@ -1,4 +1,4 @@
-# Taskproject
+# Task Management Angular and Wordpress Rest API Project
 This project is making a task management. Backend is using Wordpress Rest API
 
 ## Requirements

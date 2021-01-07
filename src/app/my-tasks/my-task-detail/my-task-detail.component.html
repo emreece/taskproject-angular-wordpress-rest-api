@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label for="inputtaskTitle" class="col-sm-2 control-label">Task:</label>
                                 <div class="col-sm-10">
-                                    <angular-editor name="taskContent" [(ngModel)]="myTask.content.rendered"></angular-editor>
+                                    <angular-editor name="taskContent" [config]="editorConfig" [(ngModel)]="myTask.content.rendered"></angular-editor>
                                     <!-- <textarea name="taskContent" id="taskContent" class="form-control" rows="10" [ngModel]="myTask.content.rendered" 
                                     required></textarea> -->
                                 </div>

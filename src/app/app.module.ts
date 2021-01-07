@@ -15,12 +15,13 @@ import { MyTaskDetailComponent } from './my-tasks/my-task-detail/my-task-detail.
 import { MyTasksHomeComponent } from './my-tasks/my-tasks-home/my-tasks-home.component';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './services/login.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MyTaskCreateComponent } from './my-tasks/my-task-create/my-task-create.component';
 import { LoginGuard } from "./login/login.guard";
+import { AuthInterceptor } from './config/config.service';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { LoginGuard } from "./login/login.guard";
     BrowserAnimationsModule,
     MatDialogModule
   ],
-  providers: [LoginService, LoginGuard],
+  providers: [LoginService, LoginGuard,  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

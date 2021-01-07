@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { ActivatedRoute} from '@angular/router';
 import { taskData } from 'src/app/models/task.model';
 import { userTasksService } from 'src/app/services/userTasks.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-my-task-detail',
@@ -17,7 +18,19 @@ export class MyTaskDetailComponent implements OnInit {
   taskID: number;
   taskStatus: {id:number, name:string} = {id:0, name:''};
   isEditing: boolean = false;
-  
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: 'auto',
+      minHeight: '250px',
+      placeholder: 'Enter task details here...',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ]
+  };
   constructor(public dialog: MatDialog, private uTasksService: userTasksService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {

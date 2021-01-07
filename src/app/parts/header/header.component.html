@@ -5,13 +5,48 @@
         <div class="header-icons">
         <div class="burger hidden-lg hidden-md"><a href="javascript:;"><span></span><span></span><span></span></a></div>
         </div>
-        <div class="header-login">
-            <span *ngIf="isLogin" style="margin-right:30px;">Welcome {{ userName }}</span>
-            <a *ngIf="!isLogin" [routerLink]="['/register']">Register</a>
-            <a *ngIf="!isLogin" [routerLink]="['/login']">Login</a>
-            <a *ngIf="isLogin" [routerLink]="['/my-tasks']">My Tasks</a>
-            <a *ngIf="isLogin" (click)="onLogout()">Logout</a>
+        <div class="page-nav">
+        <div class="page-nav-inner">
+            <ul class="page-nav__list">
+                <li><span *ngIf="isLogin" style="margin-right:30px;">Welcome {{ userName }}</span></li>
+                <li>
+                    <a *ngIf="!isLogin" [routerLink]="['/register']">Register</a>
+                </li>
+                <li>
+                    <a *ngIf="!isLogin" [routerLink]="['/login']">Login</a>
+                </li>
+                <li>
+                    <a *ngIf="isLogin" [routerLink]="['/my-tasks']">My Tasks</a>
+                </li>
+                <li>
+                    <a *ngIf="isLogin" (click)="onLogout()">Logout</a>
+                </li>
+            </ul>
+        </div>
         </div>
     </div>
 </div>
 <!-- ./ header-->
+<style>
+.header .page-nav.open {
+    background: transparent!important;
+    display: flex;
+    padding: 0;
+}
+.header .page-nav {
+    background: transparent!important;
+    padding: 0;
+    border: 0;
+}
+.header .page-nav.open .page-nav-inner {
+    display: block;
+    width: 100%;
+}
+.header .page-nav-inner{
+    justify-content: flex-end;
+}
+.header ul.page-nav__list > li > a {
+    box-shadow:none;
+}
+
+</style>

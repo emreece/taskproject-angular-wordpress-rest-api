@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-// import { Person } from 'src/Model/person';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';
 import { LoginService } from './login.service';
 import { newTaskData, taskData } from '../models/task.model';
@@ -20,17 +19,9 @@ export class userTasksService {
         if(typeof catID != 'undefined') {
             catQuery = '?categories='+catID;
         }
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-        return this.httpClient.get<any>(this.myTasksUrl+catQuery, httpOptions)
+        return this.httpClient.get<any>(this.myTasksUrl+catQuery, {observe: 'response'})
             .pipe(
                 map(response => {
-               /*      console.log(response.body); */
                     response.body.forEach(function(task){
                         let newtask = new taskData();
                         newtask = {title: task.title, taskID: task.id, content: task.content, categories: task.categories};
@@ -43,126 +34,66 @@ export class userTasksService {
             )
     }
     public getMyTask(id: Number) : Observable<any> {
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-        return this.httpClient.get<any>(this.myTasksUrl + id.toString(), httpOptions)
+        return this.httpClient.get<any>(this.myTasksUrl + id.toString(), {observe: 'response'})
             .pipe(
                 map(response => {
-                   /*  console.log("getPost",response.body); */
                     return response.body;
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
     public getCategory(catID:number): Observable<any> {
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-        return this.httpClient.get<any>(this.taskCategoriesUrl+catID, httpOptions)
+        return this.httpClient.get<any>(this.taskCategoriesUrl+catID, {observe: 'response'})
             .pipe(
                 map(response => {
                     return response.body
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
     public getCategories(): Observable<any> {
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-        return this.httpClient.get<any>(this.taskCategoriesUrl + '?orderby=id', httpOptions)
+        return this.httpClient.get<any>(this.taskCategoriesUrl + '?orderby=id', {observe: 'response'})
             .pipe(
                 map(response => {
-                   /*  console.log("categoryData", response.body); */
                     return response.body
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
     public updateTaskStatus(taskID: number, taskCategory: number): Observable<any> { 
-        console.log('updateTaskStatus');
         let taskData = { id:taskID, categories:[taskCategory] };
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-        return this.httpClient.post<any>(this.myTasksUrl+taskID, taskData, httpOptions)
+        return this.httpClient.post<any>(this.myTasksUrl+taskID, taskData, {observe: 'response'})
             .pipe(
                 map(response => {
                     console.log("categoryData", response.body);
                     return response.body
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
     public updateTask(taskData: taskData): Observable<any> { 
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-       
-        return this.httpClient.post<any>(this.myTasksUrl+taskData.taskID, taskData, httpOptions)
+        return this.httpClient.post<any>(this.myTasksUrl+taskData.taskID, taskData, {observe: 'response'})
             .pipe(
                 map(response => {
-                    // console.log("updateTask", response.body);
                     return response.body
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
     public createTask(taskData: newTaskData): Observable<any> { 
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken()
-            }),
-            observe: 'response' as 'body',
-        }
-       
-        return this.httpClient.post<any>(this.myTasksUrl, taskData, httpOptions)
+        return this.httpClient.post<any>(this.myTasksUrl, taskData, {observe: 'response'})
             .pipe(
                 map(response => {
                     return response.body
                 }),
                 retry(1),
-                // catchError(this.errorHandel)
             )
     }
 
     public canViewTask(taskID) {
-        let httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.loService.GetToken(),
-            })
-        }
         const promise = new Promise(
             (resolve,reject) => {
-            resolve(this.httpClient.get<object>(this.myTasksUrl + taskID, httpOptions)
+            resolve(this.httpClient.get<object>(this.myTasksUrl + taskID)
             .pipe(
                 retry(1),
                 catchError(this.handleAuthError)
@@ -175,11 +106,9 @@ export class userTasksService {
     errorHandel(error) {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) {
-            // Get client-side error
-            errorMessage = error.error.message;
+            errorMessage = error.error.message;  // Get client-side error
         } else {
-            // Get server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`; // Get server-side error
         }
         return throwError(errorMessage);
     }

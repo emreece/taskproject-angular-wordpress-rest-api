@@ -1,10 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, ActivatedRoute } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import { LoginService } from 'src/app/services/login.service';
-import { userTasksService } from 'src/app/services/userTasks.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,29 +12,18 @@ export class TaskDetailGuard implements CanActivate {
   myTasksUrl: string = 'https://www.esanlamlisinedir.com/wpjwt/wp-json/wp/v2/task/';
   constructor(
     private httpClient: HttpClient,
-    private tasksService: userTasksService, 
-    private route: ActivatedRoute, 
-    private router: Router,
-    private loService: LoginService) {}
+    private router: Router) {}
 
   public canViewTask(taskID) {
-    let httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.loService.GetToken(),
-        })
-    }
     const promise1 = new Promise(
       (resolve1,reject1) => {
-        this.httpClient.get<any>(this.getMyInformationUrl, httpOptions)
+        this.httpClient.get<any>(this.getMyInformationUrl)
         .toPromise()
         .then(
           response1 => { 
-            /* console.log(response1);
-            resolve(response1); */
             const promise2 = new Promise(
               (resolve2,reject2) => {
-                this.httpClient.get<any>(this.myTasksUrl+taskID, httpOptions)
+                this.httpClient.get<any>(this.myTasksUrl+taskID)
                 .pipe(
                   map(response => {
                       return response
@@ -46,8 +33,6 @@ export class TaskDetailGuard implements CanActivate {
                 .toPromise()
                 .then(
                   response2 => { 
-                    /* console.log("response1,response2");
-                    console.log(response1,response2); */
                     resolve1( {'userData':response1, 'taskData': response2});
                   },
                   msg => {

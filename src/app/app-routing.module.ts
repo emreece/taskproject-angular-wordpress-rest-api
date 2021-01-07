@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './login/login.guard';
 import { MyTaskCreateComponent } from './my-tasks/my-task-create/my-task-create.component';

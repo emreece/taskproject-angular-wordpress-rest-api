@@ -18,7 +18,7 @@ export class MyTasksHomeComponent implements OnInit {
     private uTasksService: userTasksService,  
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {     
     this.uTasksService.getCategories().subscribe(
       res => {
          this.taskStatuses = res
@@ -26,14 +26,16 @@ export class MyTasksHomeComponent implements OnInit {
     )
 
     this.route.queryParams.subscribe(queryParams => {
+
     this.selectedCat = queryParams['cat'];
-     
     if(typeof this.selectedCat != 'undefined') {
       this.uTasksService.getCategory(this.selectedCat).subscribe(
         res => {
           this.tasksTitle = res.name;
         }
       )
+    } else {
+      this.tasksTitle = 'All';
     }
       this.uTasksService.getMyTasks(this.selectedCat).subscribe(
         res => {

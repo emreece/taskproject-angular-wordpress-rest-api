@@ -13,11 +13,8 @@ export class AppComponent implements OnInit{
   title = 'taskproject';
   isLoggedIn = false;
   loginStatusChanged: Subscription;
-   // userData: string = '';
-  userData; //new userData();
-  
+  userData;
   userChanged: Subscription;
-/*   @Output() onLogin: EventEmitter<any> = new EventEmitter<any>(); */
   constructor( private loService: LoginService, private router: Router) {
     
   }
@@ -40,8 +37,7 @@ export class AppComponent implements OnInit{
               this.isLoggedIn = true;
               this.loService.getMyInformations().subscribe(
                 res => {
-                 /* this.personModel.name = res.name;
-                 this.personModel.image = res.avatar_urls[96] */
+                 this.userData.image = res.avatar_urls[96]
                  this.userData.username = res.name;
                  this.loService.userDataChanged.next(res);
                 },
@@ -55,7 +51,5 @@ export class AppComponent implements OnInit{
           }
         });   
   }
-/*   public onLoginEvent(data: any):void {
-    console.log('Data', data);
-  } */
+
 }

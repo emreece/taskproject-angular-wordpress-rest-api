@@ -29,8 +29,6 @@ export class LoginComponent implements OnInit {
   onLoginSubmit() {
     this.loService.login(this.loginForm.value.username,this.loginForm.value.password).subscribe((data: any) => {
       this.loService.loginStatusChanged.next(true);
-      console.log("onLoginSubmit");
-      console.log(data);
       this.loService.userDataChanged.next(data);
       window.localStorage.setItem("token", data.token);
       window.localStorage.setItem("refreshToken", data.token);
@@ -40,7 +38,7 @@ export class LoginComponent implements OnInit {
     error => {
       this.loginError = true;
       this.changeDetectorRef.detectChanges();
-      this.loginErrorMessage = "<span>Check your login information. <br> username: admin password:12345</span>";
+      this.loginErrorMessage = "<span>Check your login information. <br> username: testuser password:12345</span>";
       this.errorMessageElement.nativeElement.innerHTML = this.loginErrorMessage;
     })
   }
